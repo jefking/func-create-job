@@ -2,7 +2,9 @@ module.exports = function (context, req) {
     let error = null;
 
     if (typeof req.body != 'undefined' && typeof req.body == 'object') {
-        context.bindings.out = req.body;
+        let payload = req.body;
+        context.bindings.out = payload;
+        context.log(payload);
         context.res.sendStatus(200);
     }
     else {
