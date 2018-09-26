@@ -1,0 +1,7 @@
+{
+    "name": "func-create-batch-job",
+    "version": "0.0.1",
+    "dependencies": {
+        "azure-batch": "^4.0.1"
+    }
+}
