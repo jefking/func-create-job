@@ -9,23 +9,26 @@
       },
       "BatchAccountUrl": {
         "type": "string",
-        "value": "",
         "metadata": {
           "description": "Azure Batch: Account URL"
         }
       },
       "BatchAccountName": {
         "type": "string",
-        "value": "",
         "metadata": {
           "description": "Azure Batch: Account Name"
         }
       },
       "BatchAccountKey": {
         "type": "string",
-        "value": "",
         "metadata": {
           "description": "Azure Batch: Account Key"
+        }
+      },
+      "BatchPool": {
+        "type": "string",
+        "metadata": {
+          "description": "Azure Batch: Pool Id"
         }
       }
     },
@@ -70,6 +73,10 @@
               {
                 "name": "BatchAccountUrl",
                 "value": "[parameters('BatchAccountUrl')]"
+              },
+              {
+                "name": "BatchPool",
+                "value": "[parameters('BatchPool')]"
               }
             ]
           },
