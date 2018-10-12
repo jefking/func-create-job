@@ -4,38 +4,30 @@ let accountKey = process.env.BatchAccountKey;
 let accountUrl = process.env.BatchAccountUrl;
 let poolid = process.env.BatchPool;
 
-module.exports = function(context, req) {
+module.exports = function (context) {
     let error = null;
 
-    if (typeof req.body != 'undefined' && typeof req.body == 'object') {
-        let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
-        let batch_client = new batch.ServiceClient(credentials, accountUrl);
+    let blob = context.bindings.myBlob;
 
-        //LOG
-        context.log(payload);
+    let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
+    let batch_client = new batch.ServiceClient(credentials, accountUrl);
 
-        //DATA
-        let payload = req.body;
+    //Log
+    context.log(blob);
 
-        // Setting up Batch pool configuration
-        var pool_config = { poolId: poolid }
-        // Setting up Job configuration along with preparation task
-        var jobId = "processimagejob"
-        var job_config = { id: jobId, displayName: "process file", poolInfo: pool_config }
-        // Adding Azure batch job to the pool
-        var job = batch_client.job.add(job_config, function(error, result) {
-            if (error != null) {
-                console.log("Error submitting job : " + error.response);
-            }
-        });
-
-        //RESPONSE
-        context.res.sendStatus(200);
-    }
-    else {
-        context.res.sendStatus(400);
-        error = "no data; or invald payload in body";
-    }
+    // // Setting up Batch pool configuration
+    // var pool_config = { poolId: poolid }
+    
+    // // Setting up Job configuration along with preparation task
+    // var jobId = "processimagejob"
+    // var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
+    
+    // // Adding Azure batch job to the pool
+    // var job = batch_client.job.add(job_config, function (error, result) {
+    //     if (error != null) {
+    //         console.log("Error submitting job : " + error.response);
+    //     }
+    // });
 
     context.done(error);
 };
