@@ -17,15 +17,13 @@ module.exports = function (context) {
     context.log(poolid);
 
     // Setting up Batch pool configuration
-    // var pool_config = { poolId: poolid }
+    var pool_config = { poolId: poolid }
 
     // Setting up Job configuration along with preparation task
-    // var jobId = "processimagejob"
-    // context.log(jobId);
+    var jobId = "processimagejob"
+    context.log(jobId);
     // var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
     // context.log(job_config);
-
-    let error = null;
 
     // Adding Azure batch job to the pool
     // var job = batch_client.job.add(job_config, function (error, result) {
