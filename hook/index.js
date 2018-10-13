@@ -7,7 +7,7 @@ let poolid = process.env.BatchPool;
 module.exports = function (context) {
     let error = null;
 
-    let blob = context.bindings.myBlob;
+    let blob = context.bindings.fileName;
     context.log(blob);
 
     let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
