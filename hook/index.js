@@ -10,8 +10,8 @@ module.exports = function (context) {
     let blob = context.bindings.fileName;
     context.log(blob);
 
-    // let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
-    // let batch_client = new batch.ServiceClient(credentials, accountUrl);
+    let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
+    let batch_client = new batch.ServiceClient(credentials, accountUrl);
 
     context.log(poolid);
 
