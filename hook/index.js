@@ -27,7 +27,7 @@ module.exports = function (context) {
     // Adding Azure batch job to the pool
     var job = batch_client.job.add(job_config, function (error, result) {
             if (error != null) {
-                console.log.error("Error submitting job : " + error.response);
+                context.log.error("Error submitting job : " + error.response);
                 err = error;
             }
         });
@@ -53,11 +53,11 @@ module.exports = function (context) {
 
     var task = batch_client.task.add(jobId, taskConfig, function (error, result) {
         if (error !== null) {
-            console.log.error("Error occured while creating task for container " + containerName + ". Details : " + error.response);
+            context.log.error("Error occured while creating task for container " + containerName + ". Details : " + error.response);
             err = error;
         }
         else {
-            console.log("Task for container: " + containerName + " submitted successfully");
+            context.log("Task for container: " + containerName + " submitted successfully");
         }
     });
 
