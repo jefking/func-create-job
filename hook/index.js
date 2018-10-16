@@ -32,6 +32,32 @@ module.exports = function (context) {
         }
     });
 
+    // TURN into Environment Var
+    var containerName = "jefking/imageresizer";
+    context.log('Container: ' + containerName);
+
+    var taskID = containerName + guid();
+    context.log('Task Id: ' + taskID);
+
+    // Task configuration object
+    var taskConfig = {
+        id: taskID,
+        displayName: 'Process ' + blob + " in " + containerName,
+        commandLine: process.env.ImageryConnection + " " + blob
+    };
+
+    var task = batchClient.task.add(jobId, taskConfig, function (error, result) {
+
+        if (error !== null) {
+
+            console.log("Error occured while creating task for container " + containerName + ". Details : " + error.response);
+        }
+        else {
+            console.log("Task for container : " + containerName + " submitted successfully");
+
+        }
+    });
+
     context.done(error);
 };
 
