@@ -46,7 +46,7 @@ module.exports = function (context) {
         commandLine: process.env.ImageryConnection + " " + blob
     };
 
-    var task = batchClient.task.add(jobId, taskConfig, function (error, result) {
+    var task = batch_client.task.add(jobId, taskConfig, function (error, result) {
 
         if (error !== null) {
 
