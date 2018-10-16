@@ -19,7 +19,7 @@ module.exports = function (context) {
     var pool_config = { poolId: poolid }
 
     // Setting up Job configuration along with preparation task
-    var jobId = "job-" + guid();
+    var jobId = "new-data";// + guid();
     context.log('Job Id: ' + jobId);
 
     var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
@@ -41,7 +41,7 @@ module.exports = function (context) {
         containerRunOptions: "--rm"
     };
 
-    var taskID = "task-" + guid();
+    var taskID = "process-image";// + guid();
     context.log('Task Id: ' + taskID);
 
     // Task configuration object
