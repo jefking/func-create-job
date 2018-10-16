@@ -6,6 +6,13 @@
             "direction": "in",
             "path": "input/{name}",
             "connection":"ImageryConnection"
+        },
+        {
+            "name": "files",
+            "type": "blob",
+            "direction": "out",
+            "path": "output/{name}",
+            "connection":"ImageryConnection"
         }
     ],
     "disabled": false
