@@ -8,7 +8,7 @@
             "connection":"ImageryConnection"
         },
         {
-            "name": "files",
+            "name": "fileName",
             "type": "blob",
             "direction": "out",
             "path": "output/{name}",
