@@ -26,11 +26,11 @@ module.exports = function (context) {
     context.log('Job Config: ' + job_config);
 
     // Adding Azure batch job to the pool
-    // var job = batch_client.job.add(job_config, function (error, result) {
-    //     if (error != null) {
-    //         console.log("Error submitting job : " + error.response);
-    //     }
-    // });
+    var job = batch_client.job.add(job_config, function (error, result) {
+        if (error != null) {
+            console.log("Error submitting job : " + error.response);
+        }
+    });
 
     context.done(error);
 };
