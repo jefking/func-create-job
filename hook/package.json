@@ -4,6 +4,7 @@
     "author": "Jef King",
     "dependencies": {
         "azure-batch": "^4.0.1",
-        "ms-rest":"^2.3.7"
+        "ms-rest":"^2.3.7",
+        "underscore":"^1.9.1"
     }
 }
