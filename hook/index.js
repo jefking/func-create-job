@@ -36,13 +36,18 @@ module.exports = function (context) {
     var containerName = "jefking/imageresizer";
     context.log('Container: ' + containerName);
 
+    var containerSettings = {
+        imageName: containerName,
+        containerRunOptions: "--rm"
+    };
+
     var taskID = "task-" + guid();
     context.log('Task Id: ' + taskID);
 
     // Task configuration object
     var taskConfig = {
         id: taskID,
-        displayName: 'Process ' + blob + " in " + containerName,
+        containerSettings: containerSettings,
         commandLine: process.env.ImageryConnection + " " + blob
     };
 
