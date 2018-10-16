@@ -51,9 +51,9 @@ module.exports = function (context) {
         commandLine: process.env.ImageryConnection + " " + blob
     };
 
-    var task = batch_client.task.add(job_config.id, taskConfig, function (error, result) {
+    var task = batch_client.task.add(jobId, taskConfig, function (error, result) {
         if (error !== null) {
-            console.log("Error occured while creating task for container " + containerName + ". Details : " + error.response);
+            console.log.error("Error occured while creating task for container " + containerName + ". Details : " + error.response);
         }
         else {
             console.log("Task for container: " + containerName + " submitted successfully");
