@@ -8,22 +8,22 @@ module.exports = function (context) {
     let error = null;
 
     let blob = context.bindings.fileName;
-    context.log(blob);
+    context.log('Blob: ' + blob);
 
     let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
     let batch_client = new batch.ServiceClient(credentials, accountUrl);
 
-    context.log(poolid);
+    context.log('Pool Id: ' + poolid);
 
     // Setting up Batch pool configuration
     var pool_config = { poolId: poolid }
 
     // Setting up Job configuration along with preparation task
     var jobId = "processimage-" + guid();
-    context.log(jobId);
+    context.log('Job Id: ' + jobId);
 
     var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
-    context.log(job_config);
+    context.log('Job Config: ' + job_config);
 
     // Adding Azure batch job to the pool
     // var job = batch_client.job.add(job_config, function (error, result) {
