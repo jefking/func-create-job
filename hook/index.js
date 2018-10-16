@@ -5,7 +5,7 @@ let accountUrl = process.env.BatchAccountUrl;
 let poolid = process.env.BatchPool;
 
 module.exports = function (context) {
-    let error = null;
+    let err = null;
 
     let blob = context.bindings.fileName;
     context.log('Blob: ' + blob);
@@ -25,12 +25,12 @@ module.exports = function (context) {
     var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
 
     // Adding Azure batch job to the pool
-    var job = batch_client.job.add(job_config
-        , function (error, result) {
-        if (error != null) {
-            console.log("Error submitting job : " + error.response);
-        }
-    });
+    var job = batch_client.job.add(job_config, function (error, result) {
+            if (error != null) {
+                console.log.error("Error submitting job : " + error.response);
+                err = error;
+            }
+        });
 
     // TURN into Environment Var
     var containerName = "jefking/imageresizer";
@@ -54,13 +54,14 @@ module.exports = function (context) {
     var task = batch_client.task.add(jobId, taskConfig, function (error, result) {
         if (error !== null) {
             console.log.error("Error occured while creating task for container " + containerName + ". Details : " + error.response);
+            err = error;
         }
         else {
             console.log("Task for container: " + containerName + " submitted successfully");
         }
     });
 
-    context.done(error);
+    context.done(err);
 };
 
 function guid() {
