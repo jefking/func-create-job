@@ -2,7 +2,7 @@
     "bindings": [
         {
             "name": "fileName",
-            "type": "blob",
+            "type": "blobTrigger",
             "direction": "in",
             "path": "input/{name}",
             "connection":"ImageryConnection"
