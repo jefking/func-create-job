@@ -19,14 +19,14 @@ module.exports = function (context) {
     var pool_config = { poolId: poolid }
 
     // Setting up Job configuration along with preparation task
-    var jobId = "processimage-" + guid();
+    var jobId = "job-" + guid();
     context.log('Job Id: ' + jobId);
 
     var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
-    context.log('Job Config: ' + job_config);
 
     // Adding Azure batch job to the pool
-    var job = batch_client.job.add(job_config, function (error, result) {
+    var job = batch_client.job.add(job_config
+        , function (error, result) {
         if (error != null) {
             console.log("Error submitting job : " + error.response);
         }
@@ -36,7 +36,7 @@ module.exports = function (context) {
     var containerName = "jefking/imageresizer";
     context.log('Container: ' + containerName);
 
-    var taskID = containerName + guid();
+    var taskID = "task-" + guid();
     context.log('Task Id: ' + taskID);
 
     // Task configuration object
@@ -46,15 +46,12 @@ module.exports = function (context) {
         commandLine: process.env.ImageryConnection + " " + blob
     };
 
-    var task = batch_client.task.add(jobId, taskConfig, function (error, result) {
-
+    var task = batch_client.task.add(job_config.id, taskConfig, function (error, result) {
         if (error !== null) {
-
             console.log("Error occured while creating task for container " + containerName + ". Details : " + error.response);
         }
         else {
-            console.log("Task for container : " + containerName + " submitted successfully");
-
+            console.log("Task for container: " + containerName + " submitted successfully");
         }
     });
 
