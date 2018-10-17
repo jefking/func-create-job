@@ -7,8 +7,8 @@ let poolid = process.env.BatchPool;
 module.exports = function (context) {
     let err = null;
 
-    let blob = context.bindingData.path.name;
     context.log(JSON.stringify(context.bindingData, null, 4));
+    let blob = context.bindingData.path.name;
     context.log('Blob: context.bindingData.path.name ' + blob);
 
     if (blob) {
