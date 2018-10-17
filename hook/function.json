@@ -1,17 +1,11 @@
 {
     "bindings": [
         {
-            "name": "run",
+            "name": "image",
             "type": "blobTrigger",
             "direction": "in",
+            "dataType": "binary",
             "path": "input/{fileName}",
-            "connection":"ImageryConnection"
-        },
-        {
-            "name": "complete",
-            "type": "blob",
-            "direction": "out",
-            "path": "output/{fileName}",
             "connection":"ImageryConnection"
         }
     ],
