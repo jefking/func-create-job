@@ -1,7 +1,7 @@
 {
     "bindings": [
         {
-            "name": "image",
+            "name": "file",
             "type": "blobTrigger",
             "direction": "in",
             "dataType": "binary",
