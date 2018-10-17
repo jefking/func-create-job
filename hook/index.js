@@ -8,7 +8,7 @@ module.exports = function (context) {
     let err = null;
 
     let blob = context.bindings.image.name;
-    context.log('Blob: ' + blob);
+    context.log('Blob: context.bindings.image.name ' + blob);
 
     if (blob) {
 
@@ -66,7 +66,7 @@ module.exports = function (context) {
             }
         });
     }
-    else{err="no file";}
+    else { err = "no file"; }
 
     context.done(err);
 };
