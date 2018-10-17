@@ -8,7 +8,7 @@ module.exports = function (context) {
     let err = null;
 
     context.log(JSON.stringify(context.bindingData, null, 4));
-    let blob = context.bindingData.path.name;
+    let blob = context.bindingData.name;
     context.log('Blob: context.bindingData.path.name ' + blob);
 
     if (blob) {
