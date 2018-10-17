@@ -1,8 +1,10 @@
 const batch = require('azure-batch');
+
 let accountName = process.env.BatchAccountName;
 let accountKey = process.env.BatchAccountKey;
 let accountUrl = process.env.BatchAccountUrl;
 let poolid = process.env.BatchPool;
+let containerName = process.env.ContainerName;
 
 module.exports = function (context) {
     let err = null;
@@ -11,7 +13,6 @@ module.exports = function (context) {
     context.log('Blob: ' + blob);
 
     if (blob) {
-
         let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
         let batch_client = new batch.ServiceClient(credentials, accountUrl);
 
@@ -33,11 +34,6 @@ module.exports = function (context) {
                 err = error;
             }
             else {
-
-                // TURN into Environment Var
-                var containerName = "jefking/imageresizer:latest";
-                context.log('Container: ' + containerName);
-
                 var containerSettings = {
                     imageName: containerName,
                     containerRunOptions: "--rm"
