@@ -19,7 +19,8 @@ module.exports = function (context) {
     var pool_config = { poolId: poolid }
 
     // Setting up Job configuration along with preparation task
-    var jobId = "new-data";
+    var now = new Date();
+    var jobId = "process-" + now.getFullYear() + now.getMonth() + now.getDay() + now.getHours() + now.getSeconds();
     context.log('Job Id: ' + jobId);
 
     var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
