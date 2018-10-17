@@ -7,9 +7,8 @@ let poolid = process.env.BatchPool;
 module.exports = function (context) {
     let err = null;
 
-    context.log(JSON.stringify(context.bindingData, null, 4));
     let blob = context.bindingData.name;
-    context.log('Blob: context.bindingData.path.name ' + blob);
+    context.log('Blob: ' + blob);
 
     if (blob) {
 
@@ -22,7 +21,7 @@ module.exports = function (context) {
         var pool_config = { poolId: poolid }
 
         // Setting up Job configuration along with preparation task
-        var jobId = "process-" + blob;
+        var jobId = "process-" + blob.replace('.', '-');
         context.log('Job Id: ' + jobId);
 
         var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
