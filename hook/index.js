@@ -41,7 +41,8 @@ module.exports = function (context) {
                 containerRunOptions: "--rm"
             };
 
-            var taskID = "process-image";
+            var now = new Date();
+            var taskID = "process-image-" + now.getFullYear() + now.getMonth() + now.getDay() + now.getHours() + now.getSeconds();
             context.log('Task Id: ' + taskID);
 
             // Task configuration object
