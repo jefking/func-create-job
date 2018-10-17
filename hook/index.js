@@ -66,6 +66,7 @@ module.exports = function (context) {
             }
         });
     }
+    else{err="no file";}
 
     context.done(err);
 };
