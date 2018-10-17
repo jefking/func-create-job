@@ -7,63 +7,65 @@ let poolid = process.env.BatchPool;
 module.exports = function (context) {
     let err = null;
 
-    let blob = context.bindings.fileName;
+    let blob = context.bindings.run;
     context.log('Blob: ' + blob);
 
-    let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
-    let batch_client = new batch.ServiceClient(credentials, accountUrl);
+    if (blob) {
 
-    context.log('Pool Id: ' + poolid);
+        let credentials = new batch.SharedKeyCredentials(accountName, accountKey);
+        let batch_client = new batch.ServiceClient(credentials, accountUrl);
 
-    // Setting up Batch pool configuration
-    var pool_config = { poolId: poolid }
+        context.log('Pool Id: ' + poolid);
 
-    // Setting up Job configuration along with preparation task
-    var jobId = "process-" + blob;
-    context.log('Job Id: ' + jobId);
+        // Setting up Batch pool configuration
+        var pool_config = { poolId: poolid }
 
-    var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
+        // Setting up Job configuration along with preparation task
+        var jobId = "process-" + blob;
+        context.log('Job Id: ' + jobId);
 
-    // Adding Azure batch job to the pool
-    var job = batch_client.job.add(job_config, function (error, result) {
-        if (error != null) {
-            context.log("Error submitting job : " + error.response);
-            err = error;
-        }
-        else {
+        var job_config = { id: jobId, displayName: "process file: " + blob, poolInfo: pool_config }
 
-            // TURN into Environment Var
-            var containerName = "jefking/imageresizer:latest";
-            context.log('Container: ' + containerName);
+        // Adding Azure batch job to the pool
+        var job = batch_client.job.add(job_config, function (error, result) {
+            if (error != null) {
+                context.log("Error submitting job : " + error.response);
+                err = error;
+            }
+            else {
 
-            var containerSettings = {
-                imageName: containerName,
-                containerRunOptions: "--rm"
-            };
+                // TURN into Environment Var
+                var containerName = "jefking/imageresizer:latest";
+                context.log('Container: ' + containerName);
 
-            var now = new Date();
-            var taskID = "process-image-" + now.getFullYear() + now.getMonth() + now.getDay() + now.getHours() + now.getSeconds();
-            context.log('Task Id: ' + taskID);
+                var containerSettings = {
+                    imageName: containerName,
+                    containerRunOptions: "--rm"
+                };
 
-            // Task configuration object
-            var taskConfig = {
-                id: taskID,
-                containerSettings: containerSettings,
-                commandLine: process.env.ImageryConnection + " " + blob
-            };
+                var now = new Date();
+                var taskID = "process-image-" + now.getFullYear() + now.getMonth() + now.getDay() + now.getHours() + now.getSeconds();
+                context.log('Task Id: ' + taskID);
 
-            var task = batch_client.task.add(jobId, taskConfig, function (error, result) {
-                if (error !== null) {
-                    context.log("Error occured while creating task for container " + containerName + ". Details : " + error.response);
-                    err = error;
-                }
-                else {
-                    context.log("Task for container: " + containerName + " submitted successfully");
-                }
-            });
+                // Task configuration object
+                var taskConfig = {
+                    id: taskID,
+                    containerSettings: containerSettings,
+                    commandLine: process.env.ImageryConnection + " " + blob
+                };
 
-        }
-    });
+                var task = batch_client.task.add(jobId, taskConfig, function (error, result) {
+                    if (error !== null) {
+                        context.log("Error occured while creating task for container " + containerName + ". Details : " + error.response);
+                        err = error;
+                    }
+                    else {
+                        context.log("Task for container: " + containerName + " submitted successfully");
+                    }
+                });
+            }
+        });
+    }
 
     context.done(err);
 };
